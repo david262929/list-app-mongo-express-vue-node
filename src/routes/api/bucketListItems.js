@@ -36,13 +36,29 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params
   try {
 
-    const bucketListItem = new BucketListItem.findByIdAndUpdate(id, req.body).save();
+    const bucketListItem = new BucketListItem.findByIdAndUpdate(id, req.body);
     if( !bucketListItem ){
       throw "Not updated bucketListItem"
     }
     const updated = { ...bucketListItem._doc, ...req.body }
 
     res.status(200).send(updated);
+  }catch (error) {
+    console.log(error)
+    res.status(500).send()
+  }
+})
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+
+    const bucketListItem = new BucketListItem.findByIdAndDelete(id);
+    if( !bucketListItem ){
+      throw "Not deleted bucketListItem"
+    }
+
+    res.status(200).send(bucketListItem);
   }catch (error) {
     console.log(error)
     res.status(500).send()
