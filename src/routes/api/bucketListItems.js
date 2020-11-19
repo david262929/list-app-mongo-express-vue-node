@@ -53,7 +53,7 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params
   try {
 
-    const bucketListItem = new BucketListItem.findByIdAndDelete(id);
+    const bucketListItem = await BucketListItem.findByIdAndDelete(id);
     if( !bucketListItem ){
       throw "Not deleted bucketListItem"
     }
