@@ -4,6 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const fs = require('fs')
 const bodyParser = require('body-parser')
+const bucketListItemRoutes = require('./routes/api/bucketListItems')
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(morgan(`:method :url :status :res[content-length] - :response-time ms `,
   stream: fs.createWriteStream('./logs/access.log', {flags: 'a'}),
 }))
 app.use(bodyParser.json())
+app.use('/api/bucketListItems', bucketListItemRoutes)
 
 app.get('/', (req, res) => res.status(200).send('Hello world'))
 
