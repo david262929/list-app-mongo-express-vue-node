@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="notification" v-for="(item, i) in items" :key="item.id">
-      <div class="columns">
+      <div class="columns is-vcentered">
         <input
           type="text"
           v-if="isSelected(item._id)"
@@ -20,7 +20,7 @@
           <span class="tag is-primary">{{ i + 1}}</span>
           {{ item.description }}
         </p>
-        <div class="column is-narrow pr-0">
+        <div class="column is-narrow pr-0 d-flex align-items-center">
           <span class="icon has-text-info is-clickable" @click="isSelected(item._id) ? unSelect() : selectItem(item)">
             <i class="material-icons">{{isSelected(item._id) ? 'close' : 'edit'}}</i>
           </span>
@@ -112,5 +112,14 @@
   }
   .pr-0{
     padding-right: 0;
+  }
+  .d-flex{
+    display: flex;
+  }
+  .align-items-center{
+    align-items: center;
+  }
+  .justify-content-center{
+    justify-content: center;
   }
 </style>
