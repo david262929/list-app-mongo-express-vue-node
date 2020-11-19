@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   try {
     const bucketListItems = await BucketListItem.find();
     if(!bucketListItems || !bucketListItems.length){
-      throw "No bucketListItems"
+      return res.status(200).send([]);
     }
 
     const sorted = bucketListItems.sort( (a, b) => (new Date(a.date).getTime() - new Date(b.date).getTime()))
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const bucketListItem = new BucketListItem(req.body).save();
+    const bucketListItem = await new BucketListItem(req.body).save();
     if( !bucketListItem ){
       throw "Not saved bucketListItem"
     }
