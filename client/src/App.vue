@@ -5,14 +5,21 @@
         <input type="text" v-model="description" class="input" placeholder="Go to mars...">
       </div>
       <div class="control">
-        <a class="button is-info" @click="addItem" :disabled="!description">Add</a>
+        <a class="button is-info" @click="addItem" :disabled="(!description || description ==='')">Add</a>
       </div>
     </div>
     <div class="notification" v-for="(item, i) in items" :key="item.id">
-      <p>
-        <span class="tag is-primary">{{ i + 1}}</span>
-        {{ item.description }}
-      </p>
+      <div class="columns">
+        <p class="column">
+          <span class="tag is-primary">{{ i + 1}}</span>
+          {{ item.description }}
+        </p>
+        <div class="column is-narrow">
+          <span class="icon has-text-info" @click="removeItem(item, i)">
+            <i class="material-icons">delete</i>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,11 +41,20 @@ export default {
   },
   methods : {
     async addItem() {
+      const { description } = this;
+      if(!description || description === ''){
+        return;
+      }
+
       const { data } = await axios.post('/api/bucketListItems/', {
-        description: this.description
+        description,
       })
       this.items.push(data);
       this.description = '';
+    },
+    async removeItem(item, i) {
+      await axios.delete(`/api/bucketListItems/${item._id}`)
+      this.items.splice(i, 1);
     }
   },
 }
