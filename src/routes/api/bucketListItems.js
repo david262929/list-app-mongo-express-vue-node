@@ -35,8 +35,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { id } = req.params
   try {
-
-    const bucketListItem = new BucketListItem.findByIdAndUpdate(id, req.body);
+    const bucketListItem = await BucketListItem.findByIdAndUpdate(id, req.body);
     if( !bucketListItem ){
       throw "Not updated bucketListItem"
     }
