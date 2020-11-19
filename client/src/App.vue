@@ -2,10 +2,10 @@
   <div id="app">
     <div class="field has-addons">
       <div class="control is-expanded">
-        <input type="text" class="input" placeholder="Go to mars...">
+        <input type="text" v-model="description" class="input" placeholder="Go to mars...">
       </div>
       <div class="control">
-        <span class="button is-info">Add</span>
+        <a class="button is-info" @click="addItem" :disabled="!description">Add</a>
       </div>
     </div>
     <div class="notification" v-for="(item, i) in items" :key="item.id">
@@ -25,11 +25,21 @@ export default {
   data: () => {
     return {
       items: [],
+      description: ''
     }
   },
   async mounted () {
-    const { data } = await axios.get('/api/bucketListItems')
+    const { data } = await axios.get('/api/bucketListItems/')
     this.items = data;
+  },
+  methods : {
+    async addItem() {
+      const { data } = await axios.post('/api/bucketListItems/', {
+        description: this.description
+      })
+      this.items.push(data);
+      this.description = '';
+    }
   },
 }
 </script>
