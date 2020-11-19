@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <input type="text" class="input" placeholder="Go to mars...">
+      </div>
+      <div class="control">
+        <span class="button is-info">Add</span>
+      </div>
+    </div>
     <div class="notification" v-for="(item, i) in items" :key="item.id">
       <p>
         <span class="tag is-primary">{{ i + 1}}</span>
@@ -34,11 +42,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   width: 100%;
-  min-height: 100vh;
-  margin-top: 60px;
-}
-.notification{
   margin: auto;
   max-width: 700px;
+  min-height: 100vh;
+  margin-top: 60px;
 }
 </style>
