@@ -12,20 +12,20 @@
       <div class="columns">
         <input
           type="text"
-          v-if="isEditingMode(item._id)"
-          v-model="editedDescription"
+          v-if="isSelected(item._id)"
+          v-model="selectedDescription"
           class="column input is-clickable"
         />
         <p  v-else class="column">
           <span class="tag is-primary">{{ i + 1}}</span>
           {{ item.description }}
         </p>
-        <div class="column is-narrow">
-          <span class="icon has-text-info is-clickable" @click="editItem(item)">
-            <i class="material-icons">edit</i>
+        <div class="column is-narrow pr-0">
+          <span class="icon has-text-info is-clickable" @click="isSelected(item._id) ? unSelect() : selectItem(item)">
+            <i class="material-icons">{{isSelected(item._id) ? 'close' : 'edit'}}</i>
           </span>
-          <span class="icon has-text-info is-clickable" @click="removeItem(item, i)">
-            <i class="material-icons">delete</i>
+          <span class="icon has-text-info is-clickable" @click="isSelected(item._id) ? updateItem(item, i) : removeItem(item, i)">
+            <i class="material-icons">{{isSelected(item._id) ? 'save' : 'delete'}}</i>
           </span>
         </div>
       </div>
@@ -42,8 +42,8 @@
       return {
         items: [],
         description: '',
-        editingItem: {},
-        editedDescription: '',
+        selectedItem: {},
+        selectedDescription: '',
       }
     },
     async mounted () {
@@ -63,17 +63,33 @@
         this.items.push(data);
         this.description = '';
       },
-      editItem(item) {
-        this.editingItem = item;
-        this.editedDescription = item.description;
+      selectItem(item) {
+        this.selectedItem = item;
+        this.selectedDescription = item.description;
       },
-      isEditingMode (id) {
-        return this.editingItem._id && this.editingItem._id === id
+      unSelect() {
+        this.selectedItem = {};
+        this.selectedDescription = '';
+      },
+      isSelected (id) {
+        return this.selectedItem._id && this.selectedItem._id === id
       },
       async removeItem(item, i) {
         await axios.delete(`/api/bucketListItems/${item._id}`)
         this.items.splice(i, 1);
-      }
+      },
+      async updateItem(item, i) {
+        const { selectedDescription } = this;
+        if(!selectedDescription || selectedDescription === ''){
+          return;
+        }
+
+        const { data } = await axios.put(`/api/bucketListItems/${item._id}`, {
+          description: selectedDescription,
+        })
+        this.items[i] = data;
+        this.unSelect();
+      },
     },
   }
 </script>
@@ -93,5 +109,8 @@
   }
   .is-clickable {
     cursor: pointer;
+  }
+  .pr-0{
+    padding-right: 0;
   }
 </style>
