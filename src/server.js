@@ -35,9 +35,10 @@ if(NODE_ENV === 'development'){
   app.get('/', (req, res) => res.status(200).send('Hello world'))
 }else if(NODE_ENV === 'production'){
   app.use(express.static('client/dist'))
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
   })
+  app.get('/davoo', (req, res) => res.status(200).send('davoo'))
 }
 
 
