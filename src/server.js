@@ -19,6 +19,7 @@ app.use(bodyParser.json())
 app.use('/api/bucketListItems', bucketListItemRoutes)
 
 if(NODE_ENV === 'development'){
+  app.get('/davo', (req, res) => res.status(200).send('Hello world Davo dev'))
   app.get('/', (req, res) => res.status(200).send('Hello world'))
 }else if(NODE_ENV === 'production'){
   app.use(express.static('client/dist'))
