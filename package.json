@@ -4,7 +4,6 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "heroku-prebuild": "echo 'This runs before Heroku installs dependencies.' && npm install @vue/cli ",
     "server": "nodemon src/server.js --ignore client/",
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
@@ -15,7 +14,6 @@
   "author": "David Ghazaryan (david262929)",
   "license": "ISC",
   "dependencies": {
-    "@vue/cli": "^4.5.9",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
