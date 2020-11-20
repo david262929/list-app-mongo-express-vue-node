@@ -26,6 +26,8 @@ if(NODE_ENV === 'development'){
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
   })
   app.get('/davo', (req, res) => res.status(200).send('Hello world Davo'))
+}else{
+  app.get('/davo', (req, res) => res.status(200).send('Hello world xzzzzzzzzzzzz'))
 }
 
 
