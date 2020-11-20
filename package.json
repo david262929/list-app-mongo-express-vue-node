@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "heroku-prebuild": "echo 'This runs before Heroku installs dependencies.' && npm install -g @vue/cli ",
+    "heroku-prebuild": "echo 'This runs before Heroku installs dependencies.' && npm install @vue/cli ",
     "server": "nodemon src/server.js --ignore client/",
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
